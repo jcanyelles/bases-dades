@@ -8,13 +8,14 @@ import java.util.Properties;
 public class ExempleJdbc {
 
     public static void main(String[] args) throws SQLException, IOException {
-            FileInputStream input = new FileInputStream("resources/db.properties");
+            FileInputStream input = new FileInputStream("bases-dades/resources/db.properties");
             Properties props = new Properties();
             props.load(input);
             String URL = props.getProperty("url");
             String USER = props.getProperty("user");
             String PASSWORD = props.getProperty("password");
             System.out.println(URL + " " + USER + " " + PASSWORD);
+            //Aquesta instrucció ho feim servir per a Java < 1.7
             //Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(URL,USER, PASSWORD);
 
@@ -36,6 +37,7 @@ public class ExempleJdbc {
             stUpdate.setInt(2, 199);
             int files = stUpdate.executeUpdate();
             System.out.println("files " + files);
+            stUpdate.close();
             con.close();
 
     }

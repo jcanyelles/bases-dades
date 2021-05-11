@@ -17,7 +17,7 @@ public class TestJdbc {
     }
 
 
-    public Collection<Empleat> llistaEmpleats(Integer codiEmpleat, String nom, Integer codiDepartament, String job) throws SQLException {
+    public void llistaEmpleats(Integer codiEmpleat, String nom, Integer codiDepartament, String job) throws SQLException {
         Collection<Empleat> resultat = new ArrayList<>();
         int params = 1;
         Map<String,Integer> mapaParametres = new HashMap<>();
@@ -66,16 +66,16 @@ public class TestJdbc {
             }
             rs = statement.executeQuery();
             while (rs.next()){
-                Empleat empleat = new Empleat(rs.getInt("employee_id"));
-                empleat.setNom(rs.getString("first_name"));
-                empleat.setLlinatge(rs.getString("last_name"));
-                empleat.setEmail(rs.getString("email"));
-                empleat.setCodiDepartament(rs.getLong("department_id"));
-                empleat.setJobId(rs.getString("job_id"));
-                empleat.setNaixement(rs.getDate("hire_date"));
-                resultat.add(empleat);
+                System.out.println(
+                        rs.getInt("employee_id") + " " +
+                                rs.getString("first_name")+ " " +
+                        rs.getString("last_name")+ " " +
+                        rs.getString("email") + " " +
+                        rs.getLong("department_id") + " " +
+                        rs.getString("job_id") + " " +
+                        rs.getDate("hire_date")
+                );
             }
-            return resultat;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -86,8 +86,6 @@ public class TestJdbc {
                 statement.close();
             }
         }
-        return resultat;
-
     }
     public void transaccions(String id, Float parcentatge) throws SQLException {
         PreparedStatement stJobs = null;
@@ -181,24 +179,18 @@ public class TestJdbc {
         test.llistaEmpleats(null,null ,30,null);
 
         System.out.println("Seleccionam per nom");
-        Collection<Empleat> resultat = test.llistaEmpleats(null,"E%" ,null,null);
-        for (Empleat empleat : resultat) {
-            System.out.println(empleat);
-        }
+        test.llistaEmpleats(null,"E%" ,null,null);
 
 
         //test.actualitzaDepartament(10,"Administració");
         //test.actualitzaDepartament(20,"Marqueting");
 
 
-        //Integer empleats = test.procediment(30);
-        //System.out.println("Empleats: " + empleats);
+        Integer empleats = test.procediment(30);
+        System.out.println("Empleats: " + empleats);
 
         //test.transaccions("AC_ACCOUNT", 0.15f);
 
-        DepartamentDao dao = new DepartamentDaoImpl(con);
-        Departament departament = dao.carrega(30);
-        System.out.println("Departament " + departament.getNom());
 
         con.close();
     }
