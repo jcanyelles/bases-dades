@@ -4,13 +4,20 @@ public class Departament {
     private Integer id;
     private String nom;
     private Integer managerId;
-    private String locationId;
+    private Integer locationId;
 
     public Departament() {
     }
 
     public Departament(Integer id) {
         this.id = id;
+    }
+
+    public Departament(Integer id, String nom, Integer managerId, Integer locationId) {
+        this.id = id;
+        this.nom = nom;
+        this.managerId = managerId;
+        this.locationId = locationId;
     }
 
     public Integer getId() {
@@ -37,11 +44,11 @@ public class Departament {
         this.managerId = managerId;
     }
 
-    public String getLocationId() {
+    public Integer getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(String locationId) {
+    public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 

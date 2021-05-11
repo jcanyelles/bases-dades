@@ -24,9 +24,27 @@ public class ClientJdbc {
         System.out.println("Password:"); String password = scanner.nextLine();
 
         Connection con = DriverManager.getConnection(URL,user, password);
+        
         DepartamentDao dao = new DepartamentDaoImpl(con);
         Departament departament = dao.carrega(30);
         System.out.println("Departament " + departament.getNom());
+        Departament departament2 = dao.carrega(20);
+        System.out.println("Departament " + departament2.getNom() + " " + departament2.getId());
+
+        Departament departament3 = dao.carrega(1000);
+        if (departament3!=null){
+          System.out.println(departament3.getNom());
+        }
+
+        Departament nou = new Departament(500,"Departament 500", 100,null);
+        dao.inserta(nou);
+
+        Departament existeix = dao.carrega(500);
+        System.out.println("Existeix? " + existeix);
+
+        if (existeix!=null){
+            dao.esborra(existeix);
+        }
         con.close();
     }
 }

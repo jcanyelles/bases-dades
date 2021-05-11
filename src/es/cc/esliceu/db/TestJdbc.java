@@ -182,7 +182,7 @@ public class TestJdbc {
         Integer empleats = test.procediment(30);
         System.out.println("Empleats: " + empleats);
 
-        //test.transaccions("AC_ACCOUNT", 0.15f);
+        test.transaccions("AC_ACCOUNT", 0.15f);
 
 
         con.close();
