@@ -160,7 +160,7 @@ public class TestJdbc {
         }
     }
     public static void main(String[] args) throws IOException, SQLException {
-        FileInputStream input = new FileInputStream("resources/db.properties");
+        FileInputStream input = new FileInputStream("bases-dades/resources/db.properties");
         Properties props = new Properties();
         props.load(input);
 
@@ -171,25 +171,20 @@ public class TestJdbc {
 
         Connection con = DriverManager.getConnection(URL,user, password);
         //con.setAutoCommit(false);
-        DepartamentDao dao = new DepartamentDaoImpl(con);
-        Departament departament = dao.carrega(30);
-        System.out.println("Departament " + departament.getNom());
 
-        /*
+        TestJdbc test = new TestJdbc(con);
+
         System.out.println("Seleccionam per codi empleat");
         test.llistaEmpleats(101,null ,null,null);
 
         System.out.println("Seleccionam per departament");
         test.llistaEmpleats(null,null ,30,null);
-         */
-        /*
-        TestJdbc test = new TestJdbc(con);
+
         System.out.println("Seleccionam per nom");
         Collection<Empleat> resultat = test.llistaEmpleats(null,"E%" ,null,null);
         for (Empleat empleat : resultat) {
             System.out.println(empleat);
         }
-        */
 
 
         //test.actualitzaDepartament(10,"Administració");
@@ -200,6 +195,11 @@ public class TestJdbc {
         //System.out.println("Empleats: " + empleats);
 
         //test.transaccions("AC_ACCOUNT", 0.15f);
+
+        DepartamentDao dao = new DepartamentDaoImpl(con);
+        Departament departament = dao.carrega(30);
+        System.out.println("Departament " + departament.getNom());
+
         con.close();
     }
 }

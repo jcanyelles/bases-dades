@@ -17,7 +17,7 @@ public class ExempleJdbc {
             System.out.println(URL + " " + USER + " " + PASSWORD);
             //Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(URL,USER, PASSWORD);
-            /*
+
             Statement stmt = con.createStatement();
 
             ResultSet rs = stmt.executeQuery("SELECT employee_id, first_name, last_name from employees ");
@@ -30,7 +30,7 @@ public class ExempleJdbc {
             }
             rs.close();
             stmt.close();
-            */
+
             PreparedStatement stUpdate = con.prepareStatement("UPDATE employees set first_name = ? where employee_id = ?");
             stUpdate.setString(1, "Douglass");
             stUpdate.setInt(2, 199);
