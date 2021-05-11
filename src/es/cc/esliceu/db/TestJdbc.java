@@ -1,10 +1,5 @@
 package es.cc.esliceu.db;
 
-import es.cc.esliceu.db.dao.DepartamentDao;
-import es.cc.esliceu.db.dao.impl.DepartamentDaoImpl;
-import es.cc.esliceu.db.domain.Departament;
-import es.cc.esliceu.db.domain.Empleat;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -18,7 +13,6 @@ public class TestJdbc {
 
 
     public void llistaEmpleats(Integer codiEmpleat, String nom, Integer codiDepartament, String job) throws SQLException {
-        Collection<Empleat> resultat = new ArrayList<>();
         int params = 1;
         Map<String,Integer> mapaParametres = new HashMap<>();
         String sql = "select employee_id, first_name, last_name, email, hire_date, job_id, department_id from employees where 1=1 ";
@@ -40,7 +34,6 @@ public class TestJdbc {
         if (nom!=null){
             sql += " and first_name  like ( ? ) ";
             mapaParametres.put("nom", params);
-            params++;
         }
         System.out.println(sql);
 
@@ -185,7 +178,7 @@ public class TestJdbc {
         //test.actualitzaDepartament(10,"Administració");
         //test.actualitzaDepartament(20,"Marqueting");
 
-
+        System.out.println("Test de procediement");
         Integer empleats = test.procediment(30);
         System.out.println("Empleats: " + empleats);
 
