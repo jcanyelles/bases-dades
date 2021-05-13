@@ -1,8 +1,8 @@
 package es.cc.esliceu.db;
 
-import es.cc.esliceu.db.dao.DepartamentDao;
-import es.cc.esliceu.db.dao.impl.DepartamentDaoImpl;
-import es.cc.esliceu.db.domain.Departament;
+import es.cc.esliceu.db.dao.bookinfo.DepartamentDao;
+import es.cc.esliceu.db.dao.bookinfo.impl.DepartamentDaoImpl;
+import es.cc.esliceu.db.domain.bookinfo.Departament;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class ClientJdbc {
+public class ClientBookinfoJdbc {
 
     public static void main(String[] args) throws IOException, SQLException {
         FileInputStream input = new FileInputStream("bases-dades/resources/db.properties");
@@ -44,6 +44,17 @@ public class ClientJdbc {
 
         if (existeix!=null){
             dao.esborra(existeix);
+        }
+        System.out.println("***** iserta **** ");
+        Departament nouDepartament = new Departament(512,"Departament 510", 101,null);
+        dao.inserta(nouDepartament);
+
+        System.out.println("***** modifica **** ");
+        nouDepartament.setNom("Departament Elon Musk");
+        dao.modifica(nouDepartament);
+
+        for (Departament d : dao.llistaTotsDepartaments()){
+            System.out.println("\t" + d);
         }
         con.close();
     }

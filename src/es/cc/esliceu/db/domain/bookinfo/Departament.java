@@ -1,4 +1,4 @@
-package es.cc.esliceu.db.domain;
+package es.cc.esliceu.db.domain.bookinfo;
 
 public class Departament {
     private Integer id;

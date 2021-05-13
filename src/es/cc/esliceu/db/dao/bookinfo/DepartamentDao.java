@@ -1,8 +1,7 @@
-package es.cc.esliceu.db.dao;
+package es.cc.esliceu.db.dao.bookinfo;
 
-import es.cc.esliceu.db.domain.Departament;
+import es.cc.esliceu.db.domain.bookinfo.Departament;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 public interface DepartamentDao {

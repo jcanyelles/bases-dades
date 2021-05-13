@@ -1,9 +1,10 @@
-package es.cc.esliceu.db.dao.impl;
+package es.cc.esliceu.db.dao.bookinfo.impl;
 
-import es.cc.esliceu.db.dao.DepartamentDao;
-import es.cc.esliceu.db.domain.Departament;
+import es.cc.esliceu.db.dao.bookinfo.DepartamentDao;
+import es.cc.esliceu.db.domain.bookinfo.Departament;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class DepartamentDaoImpl implements DepartamentDao {
@@ -89,6 +90,30 @@ public class DepartamentDaoImpl implements DepartamentDao {
 
     @Override
     public void modifica(Departament departament) {
+        String sql = "update departments set department_name =? , manager_id = ?, location_id = ? where department_id = ?   ";
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(4, departament.getId());
+            statement.setString(1, departament.getNom());
+            statement.setInt(2, departament.getManagerId());
+            if (departament.getLocationId()!=null){
+                statement.setInt(3, departament.getLocationId());
+            } else {
+                statement.setNull(3, Types.INTEGER);
+            }
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException throwables) {
+                    throw new RuntimeException(throwables.getMessage());
+                }
+            }
+        }
 
     }
 
@@ -115,6 +140,44 @@ public class DepartamentDaoImpl implements DepartamentDao {
 
     @Override
     public Collection<Departament> llistaTotsDepartaments() {
+        Collection<Departament> resultat = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement("select department_id, department_name, manager_id, location_id from departments order by department_id ");
+            rs = statement.executeQuery();
+            while (rs.next()){
+                Departament departament = new Departament();
+                departament.setId(rs.getInt("department_id"));
+                departament.setNom(rs.getString("department_name"));
+                departament.setManagerId(rs.getInt("manager_id"));
+                departament.setLocationId(null);
+                Object location = rs.getObject("location_id");
+                if (location!=null){
+                    departament.setLocationId(rs.getInt("location_id"));
+                }
+                resultat.add(departament);
+            }
+            return resultat;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (rs!=null){
+                try {
+                    rs.close();
+                } catch (SQLException throwables) {
+                    throw new RuntimeException(throwables.getMessage());
+                }
+            }
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException throwables) {
+                    throw new RuntimeException(throwables.getMessage());
+                }
+            }
+        }
         return null;
     }
 
