@@ -8,7 +8,7 @@ public class Empleat {
     private String llinatge;
     private String email;
     private Date naixement;
-    private Long codiDepartament;
+    private Departament departament;
     private String jobId;
 
 
@@ -58,12 +58,12 @@ public class Empleat {
         this.naixement = naixement;
     }
 
-    public Long getCodiDepartament() {
-        return codiDepartament;
+    public Departament getDepartament() {
+        return departament;
     }
 
-    public void setCodiDepartament(Long codiDepartament) {
-        this.codiDepartament = codiDepartament;
+    public void setDepartament(Departament departament) {
+        this.departament = departament;
     }
 
     public String getJobId() {
@@ -82,7 +82,7 @@ public class Empleat {
                 ", llinatge='" + llinatge + '\'' +
                 ", email='" + email + '\'' +
                 ", naixement=" + naixement +
-                ", codiDepartament=" + codiDepartament +
+                ", departament=" + departament +
                 ", jobId='" + jobId + '\'' +
                 '}';
     }

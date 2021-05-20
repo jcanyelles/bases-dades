@@ -1,8 +1,12 @@
 package es.cc.esliceu.db;
 
 import es.cc.esliceu.db.dao.bookinfo.DepartamentDao;
+import es.cc.esliceu.db.dao.bookinfo.EmpleatDao;
 import es.cc.esliceu.db.dao.bookinfo.impl.DepartamentDaoImpl;
+import es.cc.esliceu.db.dao.bookinfo.impl.EmpleatDaoImpl;
 import es.cc.esliceu.db.domain.bookinfo.Departament;
+import es.cc.esliceu.db.domain.bookinfo.Empleat;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,7 +26,7 @@ public class ClientBookinfoJdbc {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Usuari:"); String user = scanner.nextLine();
         System.out.println("Password:"); String password = scanner.nextLine();
-
+        System.out.println(URL);
         Connection con = DriverManager.getConnection(URL,user, password);
         
         DepartamentDao dao = new DepartamentDaoImpl(con);
@@ -56,6 +60,12 @@ public class ClientBookinfoJdbc {
         for (Departament d : dao.llistaTotsDepartaments()){
             System.out.println("\t" + d);
         }
+        EmpleatDao empleatDao = new EmpleatDaoImpl(con);
+        Empleat empleat = empleatDao.carrega(101);
+        System.out.println("Id departament :" + empleat.getDepartament().getId() );
+        System.out.println("Id departament :" + empleat.getDepartament().getNom() );
+        System.out.println("Id departament :" + empleat.getDepartament().getManagerId() );
+
         con.close();
     }
 }

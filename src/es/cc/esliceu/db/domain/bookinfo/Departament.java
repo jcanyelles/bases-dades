@@ -4,6 +4,7 @@ public class Departament {
     private Integer id;
     private String nom;
     private Integer managerId;
+    private Empleat manager;
     private Integer locationId;
 
     public Departament() {
