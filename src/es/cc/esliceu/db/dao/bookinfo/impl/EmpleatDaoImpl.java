@@ -17,11 +17,8 @@ import java.util.Map;
 public class EmpleatDaoImpl implements EmpleatDao {
     private Connection connection;
 
-    private DepartamentDao departamentDao;
-
     public EmpleatDaoImpl(Connection connection) {
         this.connection = connection;
-        this.departamentDao = new DepartamentDaoImpl(connection);
     }
 
     public Empleat carrega(Integer id) {
@@ -101,8 +98,7 @@ public class EmpleatDaoImpl implements EmpleatDao {
                 empleat.setNaixement(rs.getDate("hire_date"));
                 Object departament = rs.getObject("department_id");
                 if (departament!=null){
-                    Departament dep = departamentDao.carrega(rs.getInt("department_id"));
-                    empleat.setDepartament(dep);
+                    empleat.setDepartament(new Departament(rs.getInt("department_id")));
                 }
                 resultat.add(empleat);
             }

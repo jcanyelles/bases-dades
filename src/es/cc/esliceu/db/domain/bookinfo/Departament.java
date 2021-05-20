@@ -1,11 +1,14 @@
 package es.cc.esliceu.db.domain.bookinfo;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Departament {
     private Integer id;
     private String nom;
-    private Integer managerId;
     private Empleat manager;
     private Integer locationId;
+    private Collection<Empleat> empleats = new ArrayList<>();
 
     public Departament() {
     }
@@ -17,7 +20,7 @@ public class Departament {
     public Departament(Integer id, String nom, Integer managerId, Integer locationId) {
         this.id = id;
         this.nom = nom;
-        this.managerId = managerId;
+        this.manager = new Empleat(managerId);
         this.locationId = locationId;
     }
 
@@ -37,12 +40,12 @@ public class Departament {
         this.nom = nom;
     }
 
-    public Integer getManagerId() {
-        return managerId;
+    public Empleat getManager() {
+        return manager;
     }
 
-    public void setManagerId(Integer managerId) {
-        this.managerId = managerId;
+    public void setManager(Empleat manager) {
+        this.manager = manager;
     }
 
     public Integer getLocationId() {
@@ -53,12 +56,20 @@ public class Departament {
         this.locationId = locationId;
     }
 
+    public Collection<Empleat> getEmpleats() {
+        return empleats;
+    }
+
+    public void setEmpleats(Collection<Empleat> empleats) {
+        this.empleats = empleats;
+    }
+
     @Override
     public String toString() {
         return "Departament{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
-                ", managerId=" + managerId +
+                ", manager=" + manager +
                 ", locationId='" + locationId + '\'' +
                 '}';
     }

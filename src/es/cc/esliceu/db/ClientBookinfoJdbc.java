@@ -6,6 +6,8 @@ import es.cc.esliceu.db.dao.bookinfo.impl.DepartamentDaoImpl;
 import es.cc.esliceu.db.dao.bookinfo.impl.EmpleatDaoImpl;
 import es.cc.esliceu.db.domain.bookinfo.Departament;
 import es.cc.esliceu.db.domain.bookinfo.Empleat;
+import es.cc.esliceu.db.servei.BookinfoService;
+import es.cc.esliceu.db.servei.impl.BookinfoServiceImpl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class ClientBookinfoJdbc {
         System.out.println("Password:"); String password = scanner.nextLine();
         System.out.println(URL);
         Connection con = DriverManager.getConnection(URL,user, password);
-        
+        /*
         DepartamentDao dao = new DepartamentDaoImpl(con);
         Departament departament = dao.carrega(30);
         System.out.println("Departament " + departament.getNom());
@@ -60,11 +62,20 @@ public class ClientBookinfoJdbc {
         for (Departament d : dao.llistaTotsDepartaments()){
             System.out.println("\t" + d);
         }
-        EmpleatDao empleatDao = new EmpleatDaoImpl(con);
-        Empleat empleat = empleatDao.carrega(101);
+
+         */
+
+        //EmpleatDao empleatDao = new EmpleatDaoImpl(con);
+        BookinfoService service = new BookinfoServiceImpl(con);
+        Empleat empleat = service.carregaEmpleat(101);
         System.out.println("Id departament :" + empleat.getDepartament().getId() );
         System.out.println("Id departament :" + empleat.getDepartament().getNom() );
-        System.out.println("Id departament :" + empleat.getDepartament().getManagerId() );
+        System.out.println("Id departament :" + empleat.getDepartament().getManager().getId() );
+        Departament departament = service.carregaDepartament(100);
+        System.out.println("Dempleats dels departament : " + departament.getEmpleats().size());
+        for (Empleat e : departament.getEmpleats()){
+            System.out.println(e.getNom());
+        }
 
         con.close();
     }

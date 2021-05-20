@@ -1,7 +1,9 @@
 package es.cc.esliceu.db.dao.bookinfo.impl;
 
 import es.cc.esliceu.db.dao.bookinfo.DepartamentDao;
+import es.cc.esliceu.db.dao.bookinfo.EmpleatDao;
 import es.cc.esliceu.db.domain.bookinfo.Departament;
+import es.cc.esliceu.db.domain.bookinfo.Empleat;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class DepartamentDaoImpl implements DepartamentDao {
                 Departament departament = new Departament();
                 departament.setId(rs.getInt("department_id"));
                 departament.setNom(rs.getString("department_name"));
-                departament.setManagerId(rs.getInt("manager_id"));
+                departament.setManager(new Empleat(rs.getInt("manager_id")));
                 departament.setLocationId(null);
                 Object location = rs.getObject("location_id");
                 if (location!=null){
@@ -63,8 +65,8 @@ public class DepartamentDaoImpl implements DepartamentDao {
             statement = connection.prepareStatement(sql);
             statement.setInt(1, departament.getId());
             statement.setString(2, departament.getNom());
-            if (departament.getManagerId()!=null){
-                statement.setInt(3, departament.getManagerId());
+            if (departament.getManager()!=null){
+                statement.setInt(3, departament.getManager().getId());
             } else {
                 statement.setNull(3, Types.INTEGER);
             }
@@ -96,7 +98,7 @@ public class DepartamentDaoImpl implements DepartamentDao {
             statement = connection.prepareStatement(sql);
             statement.setInt(4, departament.getId());
             statement.setString(1, departament.getNom());
-            statement.setInt(2, departament.getManagerId());
+            statement.setInt(2, departament.getManager().getId());
             if (departament.getLocationId()!=null){
                 statement.setInt(3, departament.getLocationId());
             } else {
@@ -150,7 +152,7 @@ public class DepartamentDaoImpl implements DepartamentDao {
                 Departament departament = new Departament();
                 departament.setId(rs.getInt("department_id"));
                 departament.setNom(rs.getString("department_name"));
-                departament.setManagerId(rs.getInt("manager_id"));
+                departament.setManager(new Empleat(rs.getInt("manager_id")));
                 departament.setLocationId(null);
                 Object location = rs.getObject("location_id");
                 if (location!=null){
