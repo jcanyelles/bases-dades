@@ -1,6 +1,9 @@
 package es.cc.esliceu.db;
 
+import es.cc.esliceu.db.dao.MetaDataDao;
+import es.cc.esliceu.db.dao.impl.MetaDataDaoImpl;
 import es.cc.esliceu.db.presentacio.PantallaCataleg;
+import es.cc.esliceu.db.presentacio.PantallaPrincipal;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,8 +15,23 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class ExempleMetaDataJdbc {
+    private MetaDataDao dao;
+
+    public ExempleMetaDataJdbc(MetaDataDao dao) {
+        this.dao = dao;
+    }
+
+
+    public void pantallaPrincipal(Scanner scanner) {
+        PantallaPrincipal principal = new PantallaPrincipal(dao, "Menú principal");
+        principal.aferegixOpcio("b", "Bases de dades");
+        principal.aferegixOpcio("x", "Sortir");
+        principal.render(scanner);
+
+    }
+
     public static void main(String[] args) throws IOException, SQLException {
-        FileInputStream input = new FileInputStream("bases-dades/resources/db.properties");
+        FileInputStream input = new FileInputStream("resources/db.properties");
         Properties props = new Properties();
         props.load(input);
 
@@ -22,18 +40,12 @@ public class ExempleMetaDataJdbc {
         System.out.println("Usuari:"); String user = scanner.nextLine();
         System.out.println("Password:"); String password = scanner.nextLine();
         System.out.println(URL);
+
         Connection con = DriverManager.getConnection(URL,user, password);
-        DatabaseMetaData metadata = con.getMetaData();
-        PantallaCataleg pantallaCataleg = new PantallaCataleg("Catàleg");
-        pantallaCataleg.setCataleg(llistaCataleg(con));
-        pantallaCataleg.render();
-    }
-    private static Collection<String> llistaCataleg(Connection connection) throws SQLException {
-        Collection<String> resultat = new ArrayList<>();
-        ResultSet rs = connection.getMetaData().getCatalogs();
-        while(rs.next()){
-            resultat.add(rs.getString(1));
-        }
-        return resultat;
+        MetaDataDao dao = new MetaDataDaoImpl(con);
+        ExempleMetaDataJdbc exemple = new ExempleMetaDataJdbc(dao);
+        exemple.pantallaPrincipal(scanner);
+
+
     }
 }
