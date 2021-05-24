@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class ExempleMetaDataJdbc {
     private MetaDataDao dao;
 
-    public ExempleMetaDataJdbc(MetaDataDao dao) {
-        this.dao = dao;
+    public ExempleMetaDataJdbc(Connection connection) {
+        this.dao = new MetaDataDaoImpl(connection);
     }
 
 
@@ -42,8 +42,8 @@ public class ExempleMetaDataJdbc {
         System.out.println(URL);
 
         Connection con = DriverManager.getConnection(URL,user, password);
-        MetaDataDao dao = new MetaDataDaoImpl(con);
-        ExempleMetaDataJdbc exemple = new ExempleMetaDataJdbc(dao);
+
+        ExempleMetaDataJdbc exemple = new ExempleMetaDataJdbc(con);
         exemple.pantallaPrincipal(scanner);
 
 

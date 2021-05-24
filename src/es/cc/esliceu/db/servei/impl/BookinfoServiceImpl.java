@@ -15,6 +15,7 @@ public class BookinfoServiceImpl implements BookinfoService {
     private Connection connection;
     private EmpleatDao empleatDao;
     private DepartamentDao departamentDao;
+
     public BookinfoServiceImpl(Connection connection) {
         this.connection = connection;
         this.empleatDao = new EmpleatDaoImpl(connection);
